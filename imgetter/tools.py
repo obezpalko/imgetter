@@ -47,6 +47,7 @@ def get_page(page, headers=False, cookies=False):
             )
     return request.text
 
+
 def save_file(file_url:str, dst_dir:str):
     if not os.path.isdir(dst_dir):
         os.mkdir(dst_dir)
@@ -65,18 +66,15 @@ def save_file(file_url:str, dst_dir:str):
                 f.write(chunk)
     return dst_file_name, request_image.status_code, request_image.reason
 
+
 def get_file_name(file_path):
     (head, tail) = os.path.split(file_path)
     (file_name, ext) = os.path.splitext(tail)
     return file_name
 
-class ImageSite:
-    def __init__(self, start_page, parser):
-        self.start_page = start_page
-        self.parser = parser
 
 # Print iterations progress
-def printProgressBar (iteration, total, prefix = '', suffix = '', decimals = 1, length = 100, fill = '█', printEnd = "\r"):
+def printProgressBar(iteration, total, prefix='', suffix='', decimals=1, length=100, fill='█', print_end="\r"):
     """
     Call in a loop to create terminal progress bar
     @params:
@@ -87,18 +85,19 @@ def printProgressBar (iteration, total, prefix = '', suffix = '', decimals = 1, 
         decimals    - Optional  : positive number of decimals in percent complete (Int)
         length      - Optional  : character length of bar (Int)
         fill        - Optional  : bar fill character (Str)
-        printEnd    - Optional  : end character (e.g. "\r", "\r\n") (Str)
+        print_end    - Optional  : end character (e.g. "\r", "\r\n") (Str)
     """
     percent = ("{0:." + str(decimals) + "f}").format(100 * (iteration / float(total)))
-    filledLength = int(length * iteration // total)
-    bar = fill * filledLength + '-' * (length - filledLength)
-    print(f'\r{prefix} |{bar}| {percent}% {suffix}', end = printEnd)
+    filled_length = int(length * iteration // total)
+    bar = fill * filled_length + '-' * (length - filled_length)
+    print(f'\r{prefix} |{bar}| {percent}% {suffix}', end=print_end)
     # Print New Line on Complete
     if iteration == total: 
         print()
 
+
 if __name__ == '__main__':
-    print('imggetter classes and tools')
+    print('imgetter classes and tools')
     try:
         print(save_file(sys.argv[1], 'tmp'))
     except IndexError:

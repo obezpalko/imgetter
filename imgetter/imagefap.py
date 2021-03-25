@@ -7,12 +7,13 @@ import sys
 import time
 from urllib.parse import urlparse, unquote
 from pyquery import PyQuery as pq
-from .tools import ImageSite, get_file_name, save_file, printProgressBar
+from .tools import get_file_name, save_file, printProgressBar
+from .imagesite import ImageSite
 
 
 class ImageFapSite(ImageSite):
     def __init__(self, album_page):
-        ImageSite.__init__(self, album_page, None)
+        ImageSite.__init__(self, album_page)
         self.title = ''
         self.image_list = []
         # try to parse url
