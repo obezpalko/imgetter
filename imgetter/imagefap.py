@@ -42,7 +42,7 @@ class ImageFapSite(ImageSite):
         self.reload_album()
         for i, img in enumerate(self.images):
             # print(f"Download {img}")
-            file_name, result_code, reason = save_file(img, f"albums/{self.gid}-{self.title}")
+            file_name, result_code, reason = save_file(img, f"albums/imagefap.com/{self.gid}-{self.title}")
             if result_code > 0:
                 time.sleep(random.random()*2)
             # idx = idx +1
