@@ -68,10 +68,13 @@ def save_file(file_url: str, dst_dir: str, file_name: str = None, headers: dict 
     dst_file_name = os.path.join(
         dst_dir,
         os.path.basename(urlparse(file_url).path) if file_name is None else file_name)
+
     _cookies = COOKIES if cookies is None else cookies
     _headers = HEADERS if headers is None else headers
     _headers['Cookie'] = ';'.join([ f'{x.name}={x.value}' for x in _cookies ])
     if os.path.exists(dst_file_name):
+        logging.debug(f'url: {file_url} status: 0, reason: already downloaded dst: {dst_file_name}')
+
         return dst_file_name, 0, 'already downloaded'
     request_image = http3.request('GET', file_url, headers=_headers)
     # try:
@@ -85,6 +88,7 @@ def save_file(file_url: str, dst_dir: str, file_name: str = None, headers: dict 
         with open(dst_file_name, 'wb') as f:
             # for chunk in request_image.da:
             f.write(request_image.data)
+    logging.debug(f'url: {file_url} status: {request_image.status}, reason: {request_image.reason} dst: {dst_file_name}')
     return dst_file_name, request_image.status, request_image.reason
 
 
@@ -113,7 +117,7 @@ def printProgressBar(iteration, total, prefix='', suffix='', decimals=1, length=
     bar = fill * filled_length + '-' * (length - filled_length)
     print(f'\r{prefix} |{bar}| {percent}% {suffix}', end=print_end)
     # Print New Line on Complete
-    if iteration == total: 
+    if iteration == total:
         print()
 
 
